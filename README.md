@@ -4,15 +4,15 @@ A Python command-line tool to fetch song links from various music streaming plat
 
 ## Table of Contents
 
-- [Features](##-Features-✨)
-- [Requirements](##-Requirements-📋)
-- [Installation](##-Installation-🛠️)
-- [Usage](##-Usage-🚀)
-  - [Command-Line Arguments](###Command-Line-Arguments-🖥️)
-  - [Examples](###-Examples-📚)
-- [Output Format](##-Output-Format-🖨️)
-- [Error Handling](##-Error-Handling-⚠️)
-- [Dependencies](##Dependencies-🧩)
+- [Features](##-Features-)
+- [Requirements](##-Requirements-)
+- [Installation](##-Installation-)
+- [Usage](##-Usage-)
+  - [Command-Line Arguments](###Command-Line-Arguments-)
+  - [Examples](###-Examples-)
+- [Output Format](##-Output-Format-)
+- [Error Handling](##-Error-Handling-)
+- [Dependencies](##Dependencies-)
 
 ## Features ✨
 
