@@ -1,11 +1,3 @@
-#!/usr/bin/python3
-#############################
-#                           #
-#                           #
-#   The Doll Has Alzheimer  #
-#                           #
-#                           #
-#############################
 import requests
 import argparse
 import json
@@ -24,29 +16,36 @@ def normalize_service_names(links):
 def fetch_links(url, country, song_if_single):
     base_url = "https://api.song.link/v1-alpha.1/links"
     params = {'url': url, 'userCountry': country, 'songIfSingle': song_if_single}
-    
+
     response = requests.get(base_url, params=params)
     response.raise_for_status()
     data = response.json()
-    
+
     if 'linksByPlatform' not in data:
         return None
-    
+
     return normalize_service_names(data['linksByPlatform'])
 
-def print_links(url, links, selected_services=None):
+def print_links(url, links, selected_services=None, fallback_service=None):
     print(Style.BRIGHT + f"\nResults for URL: {url}")
     print(Style.BRIGHT + "Available Links:")
     print("-" * 40)
-    
-    filtered_links = links
+
+    filtered_links = {}
     if selected_services:
-        filtered_links = {k: v for k, v in links.items() if k in selected_services}
-    
+        for service in selected_services:
+            if service in links:
+                filtered_links[service] = links[service]
+            elif fallback_service and fallback_service in links:
+                print(f"{Fore.YELLOW}Service {service} not found, using fallback {fallback_service}")
+                filtered_links[fallback_service] = links[fallback_service]
+    else:
+        filtered_links = links
+
     for service, info in filtered_links.items():
         normalized_service = normalize_service_name(service)
         print(f"{normalized_service}: {info['url']}")
-    
+
     print("-" * 40)
     return filtered_links
 
@@ -80,15 +79,17 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--url', type=str, help="Single song URL")
     group.add_argument('--file', type=str, help="Text file containing URLs")
-    
+
     parser.add_argument('--country', type=str, help="User country code")
     parser.add_argument('--songIfSingle', type=bool, help="Treat singles as songs")
     parser.add_argument('--select', '-s', nargs='+', help="Services to save (e.g., tidal)")
+    parser.add_argument('--fallback', type=str, help="Fallback service if selected service is unavailable")
     parser.add_argument('--output', '-o', type=str, help="Output file to save links")
 
     args = parser.parse_args()
-    
+
     selected_services = {s.strip().lower().replace(' ', '_') for s in args.select} if args.select else None
+    fallback_service = args.fallback.strip().lower().replace(' ', '_') if args.fallback else None
     output_file = open(args.output, 'w') if args.output else None
 
     try:
@@ -106,8 +107,8 @@ def main():
                     print(f"{Fore.YELLOW}No links found for {url}")
                     continue
 
-                filtered_links = print_links(url, links, selected_services)
-                
+                filtered_links = print_links(url, links, selected_services, fallback_service)
+
                 if output_file and filtered_links:
                     for info in filtered_links.values():
                         output_file.write(f"{info['url']}\n")
