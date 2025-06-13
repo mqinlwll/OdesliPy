@@ -37,7 +37,7 @@ A Python command-line tool to fetch song links from various music streaming plat
 
    ```bash
    git clone https://github.com/mqinlwll/OdesliPy/.git
-   cd odesli-song-link-fetcher
+   cd OdesliPy
    ```
 
 2. Install dependencies using pip:
@@ -54,7 +54,7 @@ A Python command-line tool to fetch song links from various music streaming plat
 
 ## Usage 🚀
 
-Run the script using the `python odesli4.py` command with appropriate arguments. You can provide a single URL or a file containing multiple URLs.
+Run the script using the `python odesli.py` command with appropriate arguments. You can provide a single URL or a file containing multiple URLs.
 
 ### Command-Line Arguments 🖥️
 
@@ -73,7 +73,7 @@ Run the script using the `python odesli4.py` command with appropriate arguments.
 1. **Fetch links for a single URL**:
 
    ```bash
-   python odesli4.py --url "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT" --country US
+   python odesli.py --url "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT" --country US
    ```
 
    Output: Links for available platforms (e.g., Spotify, Apple Music, YouTube).
@@ -81,7 +81,7 @@ Run the script using the `python odesli4.py` command with appropriate arguments.
 2. **Fetch specific services with a fallback**:
 
    ```bash
-   python odesli4.py --url "https://music.apple.com/us/album/1440903200" -s tidal deezer --fallback spotify
+   python odesli.py --url "https://music.apple.com/us/album/1440903200" -s tidal deezer --fallback spotify
    ```
 
    Output: Links for Tidal and Deezer, or Spotify if unavailable.
@@ -89,7 +89,7 @@ Run the script using the `python odesli4.py` command with appropriate arguments.
 3. **Process multiple URLs from a file and save to output**:
 
    ```bash
-   python odesli4.py --file urls.txt --output links.txt
+   python odesli.py --file urls.txt --output links.txt
    ```
 
    Input file (`urls.txt`):
